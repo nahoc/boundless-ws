@@ -1,8 +1,8 @@
 import { throttle } from "es-toolkit";
 import { Wallet, ethers } from "ethers";
 import postgres from "postgres";
-import { EIP712_TYPES } from "shared/const/eip712-types";
-import { strip0xPrefix } from "shared/utils/strip-0x-prefix";
+import { EIP712_TYPES } from "shared/const/eip712-types.js";
+import { strip0xPrefix } from "shared/utils/strip-0x-prefix.js";
 import { hashTypedData } from "viem";
 import WebSocket from "ws";
 

@@ -15,6 +15,9 @@
         "viem": "2.21.53",
         "ws": "8.18.0",
       },
+      "devDependencies": {
+        "dotenv": "16.4.7",
+      },
     },
     "packages/shared": {
       "name": "shared",
@@ -41,6 +44,8 @@
     "aes-js": ["aes-js@4.0.0-beta.5", "", {}, "sha512-G965FqalsNyrPqgEGON7nIx1e/OVENSgiEIzyC63haUMuvNnwIgIjMs52hlTCKhkBny7A2ORNlfY9Zu+jmGk1Q=="],
 
     "boundless-ws-client": ["boundless-ws-client@workspace:apps/boundless-ws-client"],
+
+    "dotenv": ["dotenv@16.4.7", "", {}, "sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ=="],
 
     "es-toolkit": ["es-toolkit@1.29.0", "", {}, "sha512-GjTll+E6APcfAQA09D89HdT8Qn2Yb+TeDSDBTMcxAo+V+w1amAtCI15LJu4YPH/UCPoSo/F47Gr1LIM0TE0lZA=="],
 

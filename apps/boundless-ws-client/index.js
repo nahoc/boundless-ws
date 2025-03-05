@@ -1,6 +1,8 @@
-import { OrderStreamClient } from "./client";
+import "dotenv/config";
 
-import "shared/utils/big-int-json";
+import { OrderStreamClient } from "./client.js";
+
+import "shared/utils/big-int-json.js";
 
 if (!process.env.WS_WALLET_PRIVATE_KEY) {
 	throw new Error("WS_WALLET_PRIVATE_KEY env variable is not set");
