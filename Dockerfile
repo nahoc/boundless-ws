@@ -5,7 +5,8 @@ ARG BUN_VERSION=1.1.38
 # Adjust NODE_VERSION as desired
 ARG NODE_VERSION=20
 FROM oven/bun:${BUN_VERSION}-slim AS base
-ENV PORT=8080
+
+LABEL fly_launch_runtime="Bun"
 
 # Set the working directory to root
 WORKDIR /
@@ -26,8 +27,6 @@ RUN bun install --ci
 
 # Set the working directory for the final stage
 WORKDIR /apps/boundless-ws-client
-
-EXPOSE 8080
 
 # Start the server
 CMD [ "bun", "run", "start" ]
