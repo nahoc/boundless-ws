@@ -1,32 +1,29 @@
 # syntax = docker/dockerfile:1
 
-# Adjust BUN_VERSION as desired
 ARG BUN_VERSION=1.1.38
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20
 FROM oven/bun:${BUN_VERSION}-slim AS base
 
-LABEL fly_launch_runtime="Bun"
+WORKDIR /app
 
-# Set the working directory to root
-WORKDIR /
-
-# Set production environment
 ENV NODE_ENV="production"
+ENV PORT=8080  # Render requires specific port
 
-# Install packages needed to build node modules
+# Install system dependencies
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential pkg-config python-is-python3
 
-# Install node modules
-COPY package.json ./
+# Copy project files
+COPY package.json bun.lockb* ./
 COPY ./apps/boundless-ws-client ./apps/boundless-ws-client
 COPY ./packages/shared ./packages/shared
 
+# Install dependencies
 RUN bun install --ci
 
-# Set the working directory for the final stage
-WORKDIR /apps/boundless-ws-client
+WORKDIR /app/apps/boundless-ws-client
 
-# Start the server
+# Expose the port Render uses
+EXPOSE 8080
+
+# Start command
 CMD [ "bun", "run", "start" ]
