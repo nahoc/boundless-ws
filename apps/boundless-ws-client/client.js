@@ -248,10 +248,6 @@ export class OrderStreamClient {
 
 	async connect() {
 		try {
-			if (this.ws) {
-				this.disconnect();
-			}
-
 			console.info("Connecting to WebSocket server...");
 
 			await this.establishConnection();
@@ -270,11 +266,13 @@ export class OrderStreamClient {
 	}
 
 	async establishConnection() {
+		console.log("1");
 		const nonceResponse = await fetch(
 			`${this.baseUrl}/api/nonce/${this.address}`,
 		);
+		console.log("2");
 		const { nonce } = await nonceResponse.json();
-
+		console.log("3");
 		const authority = new URL(this.baseUrl).host;
 		const messageString = [
 			`${authority} wants you to sign in with your Ethereum account:`,
@@ -291,7 +289,7 @@ export class OrderStreamClient {
 
 		const signature = await this.wallet.signMessage(messageString);
 		const sig = ethers.Signature.from(signature);
-
+		console.log("4");
 		const authMessage = {
 			message: messageString,
 			signature: {
@@ -306,6 +304,7 @@ export class OrderStreamClient {
 		const wsUrl = `${this.baseUrl.replace(/^http(s)?:\/\//, (match) =>
 			match.includes("s") ? "wss://" : "ws://",
 		)}/ws/orders`;
+		console.log("5");
 
 		this.ws = new WebSocket(wsUrl, undefined, {
 			headers: {
@@ -318,24 +317,19 @@ export class OrderStreamClient {
 			handshakeTimeout: 10000,
 		});
 
+		console.log("6");
 		this.removeWebSocketListeners();
 		this.attachWebSocketListeners();
 	}
 
 	removeWebSocketListeners() {
-		if (this.ws) {
-			this.ws.removeAllListeners("open");
-			this.ws.removeAllListeners("message");
-			this.ws.removeAllListeners("error");
-			this.ws.removeAllListeners("close");
-		}
+		this.ws.removeAllListeners("open");
+		this.ws.removeAllListeners("message");
+		this.ws.removeAllListeners("error");
+		this.ws.removeAllListeners("close");
 	}
 
 	attachWebSocketListeners() {
-		if (!this.ws) {
-			return;
-		}
-
 		this.ws.on("open", () => {
 			console.info("************* WebSocket connected");
 		});
@@ -386,9 +380,5 @@ export class OrderStreamClient {
 
 		this.orderQueue = [];
 		console.info("WebSocket client disconnected");
-	}
-
-	isConnected() {
-		return this.ws !== null && this.ws.readyState === WebSocket.OPEN;
 	}
 }
