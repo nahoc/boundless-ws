@@ -1,0 +1,20 @@
+{
+  "name": "risczero-website",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "check": "bunx @biomejs/biome check --write --unsafe .",
+    "postinstall": "bunx patch-package",
+    "lint": "bunx @biomejs/biome lint ."
+  },
+  "packageManager": "bun@1.2.3",
+  "overrides": {
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}
